@@ -23,7 +23,5 @@ int TypeManager::ampliar(int dir, int tipo1, int tipo2) {
 int TypeManager::reducir(int dir, int tipo1, int tipo2) {
     if (tipo1 == tipo2) return tipo1;
     
-    // CORRECCIÓN: Al reducir, la expresión resultante adopta el tipo destino (tipo2).
-    // Antes estábamos devolviendo tipo1 por error.
     return tipo2;
 }
