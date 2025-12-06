@@ -1,44 +1,36 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "symbol_table.hpp"
+#include "SymbolTable.hpp" 
 
 class SymbolTableStack {
 private:
-    std::vector<std::unique_ptr<SymbolTable*>> stack;
+    // Este ahora almacena unique_ptr a objetos SymbolTable, no a punteros de tablas, lo tuve que cambiar
+    std::vector<std::unique_ptr<SymbolTable>> stack;
 
 public:
-    // Crea nuevo ámbito
+    // crea nuevo ámbito
     void pushScope();
 
-    // Sale de un ámbito
+    // sale de un ámbito 
     void popScope();
 
-    //Sale el ámbito y retorna la referencia a la tabla de símbolos en la cima
-    SymbolTable *popSymbolTable();
+    // sale del ámbito y retorna el puntero a la tabla (
+    SymbolTable* popSymbolTable();
 
-    // Insertar solo en tope
+    // insertar solo en tope
     bool insertTop(const SymbolEntry &entry);
 
-    // Insertar solo en la base (ámbito global)
-    bool insertBase(const SymbolEntry &entry) ;
+    // insertar solo en la base (ámbito global)
+    bool insertBase(const SymbolEntry &entry);
 
-    // Buscar solo en tope
+    // buscar solo en tope
     SymbolEntry* lookupTop(const std::string &id);
 
-    // Buscar solo en la base
+    // buscar solo en la base
     SymbolEntry* lookupBase(const std::string &id);
 
-    // Depuración
-    SymbolTable* currentScope() {
-        if (stack.empty()) return nullptr;
-        return stack.back().get();
-    }
-
-    SymbolTable* globalScope() {
-        if (stack.empty()) return nullptr;
-        return stack.front().get();
-    }
-
+    SymbolTable* currentScope();
+    SymbolTable* globalScope();
     size_t levels() const { return stack.size(); }
 };
