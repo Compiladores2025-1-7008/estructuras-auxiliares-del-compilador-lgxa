@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++17 -Wall -I./src -I./external/googletest/googletest/include
 LDFLAGS = -pthread
 
 SRC_DIR = src
-TEST_DIR = tests
+TEST_DIR = test
 BUILD_DIR = build
 
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)
@@ -11,7 +11,7 @@ TEST_SRCS = $(wildcard $(TEST_DIR)/*.cpp)
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 TEST_OBJS = $(TEST_SRCS:$(TEST_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
-GTEST_LIB = external/googletest/build/lib/libgtest.a external/googletest/build/lib/libgtest_main.a
+GTEST_LIB = external/googletest/build/lib/libgtest_main.a external/googletest/build/lib/libgtest.a
 
 TARGET_TEST = runTests
 
