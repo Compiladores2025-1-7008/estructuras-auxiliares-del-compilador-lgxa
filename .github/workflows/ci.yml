@@ -1,10 +1,6 @@
-cat <<EOF > .github/workflows/ci.yml
 name: C++ CI
 
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
+on: [push, pull_request]
 
 jobs:
   build:
@@ -23,4 +19,3 @@ jobs:
 
     - name: Build and Run Tests
       run: make
-EOF
