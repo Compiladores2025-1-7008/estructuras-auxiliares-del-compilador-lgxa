@@ -4,21 +4,37 @@
 TEST(SymbolTableTest, InsertAndRetrieveSymbol) {
     SymbolTable ts;
 
-    ts.insert("x", 1, VarCategory, 100);
-    auto sym = ts.get("x");
+    SymbolEntry entry;
+    entry.id = "x";
+    entry.typeId = 1;
+    entry.category = Category::VAR;
+    entry.address = 100;
+    
+    ts.insert(entry);
+    
+    // usar lookup que devuelve puntero
+    auto sym = ts.lookup("x");
 
-    ASSERT_TRUE(sym.has_value());
+    ASSERT_TRUE(sym != nullptr);
     EXPECT_EQ(sym->typeId, 1);
-    EXPECT_EQ(sym->dir, 100);
-    EXPECT_EQ(sym->category, VarCategory);
+    EXPECT_EQ(sym->address, 100);
+    EXPECT_EQ(sym->category, Category::VAR);
     EXPECT_TRUE(sym->params.empty());
 }
 
 TEST(SymbolTableTest, FunctionSymbol) {
     SymbolTable ts;
-    ts.insert("sum", 3, FunctionCategory, 200, {1,2});
+    
+    SymbolEntry entry;
+    entry.id = "sum";
+    entry.typeId = 3;
+    entry.category = Category::FUNCTION;
+    entry.address = 200;
+    entry.params = {1, 2};
 
-    auto sym = ts.get("sum");
-    ASSERT_TRUE(sym.has_value());
+    ts.insert(entry);
+
+    auto sym = ts.lookup("sum");
+    ASSERT_TRUE(sym != nullptr);
     EXPECT_EQ(sym->params.size(), 2);
 }
